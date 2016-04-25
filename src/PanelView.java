@@ -4,23 +4,43 @@
  * 
  */
 
+/*
+ * Attributions:
+ * makeTextPanel and imageIcon are edited but retrieved from:
+ * https://docs.oracle.com/javase/tutorial/uiswing/components/tabbedpane.html
+ * 
+ */
+
+
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JTabbedPane;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
+import javax.swing.JFrame;
+import javax.swing.JComponent;
+
 
 public class PanelView extends JFrame implements ActionListener{
 
 	//the panel information
 	public PanelView(){
 
-		//add the content to the current panel
-		JPanel panel = new JPanel();
-		getContentPane().add(panel);
-		panel.setLayout(null);
+		//tabs and future image icon ability from oracle tutorial 
+		JTabbedPane tabbedPane = new JTabbedPane();
+        ImageIcon icon = createImageIcon("images/middle.gif");
+		
+		JComponent panel1 = makeTextPanel("");
+		tabbedPane.addTab("Grades", icon, panel1, "Displays grade information");
+		
+		JComponent panel2 = makeTextPanel("");
+        tabbedPane.addTab("Settings", icon, panel2, "Edit grade information");
+		
+		//adding content to pan2
 
 		//creating a button for quitting
 		JButton quitButton = new JButton("Quit");
@@ -28,13 +48,20 @@ public class PanelView extends JFrame implements ActionListener{
 		quitButton.addActionListener(this);
 
 		//adding the quit button
-		panel.add(quitButton);
+		panel1.add(quitButton);
 
+		
+		//adding content to pan2
+		
+		
+		
+		
 		//title, size, location to center
 		setTitle("GradeReader");
 		setSize(1000, 500);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		getContentPane().add(tabbedPane);
 	}
 
 	@Override
@@ -49,6 +76,26 @@ public class PanelView extends JFrame implements ActionListener{
 		
 	}
 
+	protected JComponent makeTextPanel(String text) {
+        JPanel panel = new JPanel(false);
+        JLabel filler = new JLabel(text);
+        filler.setHorizontalAlignment(JLabel.CENTER);
+        panel.setLayout(null);
+        panel.add(filler);
+        return panel;
+    }
+	
+	
+	protected static ImageIcon createImageIcon(String path) {
+        java.net.URL imgURL = PanelView.class.getResource(path);
+        if (imgURL != null) {
+            return new ImageIcon(imgURL);
+        } else {
+            System.err.println("Couldn't find file: " + path);
+            return null;
+        }
+    }
+	
 
 	//main function to launch the application. This will eventually be moved to the run class
 	public static void main(String[] args) {
