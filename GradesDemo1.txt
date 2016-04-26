@@ -1,0 +1,4 @@
+assignments 30
+midterms 30
+labs 15
+exam 25
